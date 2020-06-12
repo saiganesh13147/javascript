@@ -1,0 +1,330 @@
+<html>
+
+<head>
+    <script>
+       // Destructuring
+       console.log('FIRST EXAMPLE: destructuring Array');
+       var names = ["Grace", "Charles", "Ada"]
+       console.log(names);
+       
+       var [name1, name2, name3] = names;
+       console.log(name1); // Grace 
+       console.log(name2); // Charles 
+       console.log(name3); // Ada 
+
+       // Skip an array element
+       
+       console.log('SECOND EXAMPLE: skipping an element');
+       var [name1, , name2] = names;
+       console.log(name1); // Grace 
+       console.log(name2); // Ada
+
+       // Default Values for array element
+       
+       console.log('THIRD EXAMPLE: providing defaults');
+       var [name1 = "1st", name2 = "2nd", name3 = "3rd", name4 = "4th"] = names;
+       console.log(name1); // Grace 
+       console.log(name2); // Charles 
+       console.log(name3); // Ada 
+       console.log(name4); // 4th
+
+       // Swap variable values
+       
+       console.log('FOURTH EXAMPLE: Swapping');
+       var first = "Grace",
+           last = "Hopper";
+       [first, last] = [last, first];
+       console.log(first + ' ' + last); // Hopper console.log(last);     // Grace 
+
+       // Destructuring a String
+       console.log('STRING EXAMPLE: destructuring');
+       var [a, b, c] = "USA";
+       console.log(a); // U 
+       console.log(b); // S 
+       console.log(c); // A 
+
+       
+       // Destructuring values of an array as returned by a function
+       console.log('FUNCTION EXAMPLE: destructuring Array');
+       var getDateParts = function(dt) {
+           var parts = [];
+           parts.push(dt.getMonth() + 1); // month is zero based    
+           parts.push(dt.getDate());
+           parts.push(dt.getFullYear());
+           console.log(parts);
+           return parts;
+       }; // date is April 15, 2017 
+       var [m, , y] = getDateParts(new Date()); // m = 4, y = 2017 
+       console.log(`m: ${m}, y: ${y}`);
+       
+       // Destructuring an object
+       console.log('OBJECT EXAMPLE');
+       var nameObj = {
+           first: "Grace",
+           last: "Hopper",
+           vocation: "Computer Programmer",
+           age: 29,
+           favoriteFruit: "Apples"
+       };
+       var {
+           first,
+           last
+       } = nameObj; // first = "Grace", last = "Hopper"
+
+       console.log(`first: ${first}, last: ${last}`);
+       
+       var getFavoriteFruit = function({first, favoriteFruit}){
+           console.log(`${first}'s favorite fruit is ${favoriteFruit}`);
+       }
+       
+       getFavoriteFruit(nameObj);
+       
+
+       // How to use the Spread operator Copy an array 
+       var list = [1, 2, 3];
+       var newlist = [...list]; // newlist = [1,2,3] 
+
+       // Use multiple Spread operators in an array literal 
+       var list1 = [2, 3, 4];
+       var list2 = [6, 7];
+       var newlist = [1, ...list1, 5, ...list2]; // newlist = [1,2,3,4,5,6,7] 
+
+       // Call the push() method to add array elements to the end of an existing array 
+       var list = [1, 2, 3];
+       list.push(...[4, 5, 6]); // list = [1,2,3,4,5,6] 
+       
+       // Create a new Date object from an array of date parts 
+       var dateparts = [2017, 3, 15];
+       var taxday = new Date(...dateparts);
+       console.log(taxday.toDateString()); // Sat Apr 15 2017 
+
+
+       // How to use the Rest operator Destructure an array 
+       var list = [1, 2, 3, 4, 5];
+       var [first, ...rest] = list; // first = 1, rest = [2,3,4,5]
+       console.log(`first: ${first}, ${rest}`);
+//        var [first, ...middle, last]; // SyntaxError 
+
+       // A function that uses a Rest operator in its parameter list 
+       var myPetIs = function(name, species, ...descriptors) {
+           return name + " is a " + species + " who is " + descriptors.join(", ");
+       };
+       var str = myPetIs("Emma", "cat", "sweet", "furry", "a character", "long-haired", "sleepy"); // Emma is a cat who is sweet, furry, a character 
+       console.log('MyPet Example: ' + str);
+       
+
+       // How to use a Spread operator to pass an array  to a function that uses a Rest operator 
+       var myPetIs = function(name, species, ...descriptors) {
+           return name + " is a " + species + " who is " + descriptors.join(", ");
+       };
+       var pet_description = ["smart", "loyal", "enthusiastic", "poorly behaved"];
+       var str = myPetIs("Chelsea", "dog", ...pet_description); // Chelsea is a dog who is smart, loyal, enthusiastic, poorly behaved 
+       
+       console.log('Rest and Spread example: ' + str);
+
+        
+        // How to use the let keyword to create block scope 
+       let letLoop = function() {
+           var sum = 0;
+           
+           for (let i = 0; i < 5; i++) {
+               sum += i;
+           }
+           console.log(i); // Reference error: i is not defined 
+       };
+
+       // How to use the let keyword to fix the closure loop problem Assigning click event handlers in a loop 
+       window.onload = function() {
+           var topSites = ["Google", "Facebook", "Twitter"];
+           var links = $("top_sites").getElementsByTagName("a");
+           for (let i in topSites) {
+               links[i].text = topSites[i];
+               links[i].onclick = function() {
+                   alert("You clicked on " + topSites[i]);
+               };
+           }
+       };
+
+        // How to use a constant
+       const TAXRATE = 0.87;
+       let subtotal = 10;
+       var tax = subtotal * TAXRATE;
+       TAXRATE = 0.75; // TypeError: Assignment to constant variable. 
+
+        
+       const taxInfo = {
+           taxrate: 0.87    
+       }
+       
+       let taxInfo2 = {};
+       // NOT Allowed: CONST
+       taxInfo = taxInfo2;
+       
+       // Allowed, because reference doesn't change
+       taxInfo.taxrate = 0.75;
+       tax = subtotal * taxInfo.taxrate;
+       
+
+       // A function with a default value 
+       function calculateSalesTax(amt, taxRate = 0.087) {
+           return amt * taxRate;
+       };
+       
+
+//        function call that uses the default value
+       var tax = calculateSalesTax(100); // tax = 8.7 
+       console.log(`Default tax rate: ${tax}`);
+       
+       // A function call that overrides the default value 
+       var tax = calculateSalesTax(100, 0.075); // tax = 7.5
+       console.log(`User tax rate: ${tax}`);
+       
+       // How to pass a function with one parameter to a method Traditional code that passes a function to the forEach() method of an array 
+       var sum = 0;
+       [1, 2, 3, 4, 5].forEach(function(v) {
+           sum += v
+       }); // sum = 15 
+       
+       // Code that passes an arrow function to the forEach() method of an array 
+       var sum = 0;
+       [1, 2, 3, 4, 5].forEach( (v) => sum += v);
+
+//        // An arrow function that omits the optional parentheses for a single parameter 
+       [1, 2, 3, 4, 5].forEach(v => sum += v);
+
+       // How to pass a function with two parameters to a method Traditional code that passes a function to the reduce() method of an array 
+       var sum = [1, 2, 3, 4, 5].reduce(function(prev, current) {
+           return prev + current;
+       }); // sum = 15 
+
+       // Code that passes an arrow function to the reduce() method of an array 
+       var sum = [1, 2, 3, 4, 5].reduce((prev, current) => prev + current);
+
+
+
+
+       // The shortcut syntax for coding a method in an object literal Traditional syntax 
+       var tasklist = {
+           sort: function() {
+               /* sort code goes here */
+           },
+           display: function(div) {
+               /* display code goes here */
+           }
+       };
+       // Shortcut syntax 
+       var tasklist = {
+           sort() {
+               /* sort code goes here */
+           },
+           display(div) {
+               /* display code goes here */
+           }
+       };
+       
+       // How to use the shortcut syntax to invoke an IIFE A traditional IIFE 
+       var blockScopeLoop = function() {
+           var arr = [];
+           (function() {
+               for (var i = 0; i < 5; i++) {
+                   arr.push(i);
+               }
+           })();
+       };
+       // Shortcut syntax for an IIFE
+       var es6blockScopeLoop = function() {
+           var arr = []; 
+           {
+               for (var i = 0; i < 5; i++) {
+                   arr.push(i);
+               }
+           }
+       };
+       // How to use the shortcut syntax with IIFEs that accept arguments Traditional code that invokes an IIFE and passes an argument
+       (function(mod) {
+           mod.changeSpeed = function(speed) {
+               /* code goes here */
+           };
+       })(myapp.slideshow);
+
+       // Code that uses an arrow function to invoke an IIFE and pass an argument
+       (mod => {
+           mod.changeSpeed = function(speed) {
+               /* code goes here */
+           };
+       })(myapp.slideshow);
+
+
+       // How to declare a class A class declaration 
+       class Percent {
+           constructor(rate) {
+               this.rate = rate
+           }
+           getPercent(subtotal) {
+               return subtotal * this.rate;
+           }
+       };
+
+       //A class expression
+       var Percent = class {
+           constructor(rate) {
+               this.rate = rate
+           }
+           getPercent(subtotal) {
+               return subtotal * this.rate;
+           }
+       };
+
+       // How to create an instance(object) of the Percent class
+       var percent = new Percent(0.1);
+
+       // How to call the getPercent() method of the object
+       var salesrepPercent = percent.getPercent(2500.00); // returns 250
+
+       // How to inherit methods from a class A class declaration 
+       class Commission extends Percent { // inherits the Percent class    
+           constructor(rate, isSplit) {
+               super(rate); // calls the parent constructor        
+               this.isSplit = isSplit
+           }
+           getPercent(subtotal) {
+               var percent = super.getPercent(subtotal); // call parent method        
+               return (this.isSplit) ? percent / 2 : percent;
+           }
+       };
+
+       // How to create an instance(object) of the Commission class
+       var commission = new Commission(0.1, true);
+
+       // How to call the getPercent() method of the object
+       var salesrepPercent = commission.getPercent(2500.00); // returns 125
+
+        // How to use the includes() method to test an array for a specific value 
+        var list = [1, 2, 3, 4];
+        var value = list.includes(5); // value = false 
+        console.log('Does list include 5? ' + value)
+        
+        var value = list.includes(3); // value = true
+        var value = list.includes(3, 3); // value = false 
+        var value = list.includes(4, 8); // value = false 
+
+        // How to use the includes() method to test for NaN 
+        list.push(NaN);
+        console.log(list);
+        var value = list.includes(NaN); // value = true 
+        
+        console.log('Using indexof: ' + list.indexOf(NaN));
+        var value = (list.indexOf(NaN) > -1); // value = false 
+
+        // The exponentiation operator (**) 
+        var result = 2 ** 3; // result = 8 // same as Math.pow(2,3)
+        console.log('Result of 2^3: ' + result);
+        
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
