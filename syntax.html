@@ -320,6 +320,39 @@
         var result = 2 ** 3; // result = 8 // same as Math.pow(2,3)
         console.log('Result of 2^3: ' + result);
         //Hello i added new things to master branch
+
+        const isItDoneYet = new Promise();
+
+
+            const checkIfItsDone = () => {
+            isItDoneYet
+                .then(ok => {
+                console.log(ok)
+                })
+                .catch(err => {
+                console.error(err)
+                })
+            }
+
+
+            const status = response => {
+            if (response.status >= 200 && response.status < 300) {
+                return Promise.resolve(response)
+            }
+            return Promise.reject(new Error(response.statusText))
+            }
+
+            const json = response => response.json()
+
+            fetch('/todos.json')
+            .then(status)
+            .then(json)
+            .then(data => {
+                console.log('Request succeeded with JSON response', data)
+            })
+            .catch(error => {
+                console.log('Request failed', error)
+            })    
         
     </script>
 </head>
