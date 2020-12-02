@@ -319,6 +319,19 @@
         // The exponentiation operator (**) 
         var result = 2 ** 3; // result = 8 // same as Math.pow(2,3)
         console.log('Result of 2^3: ' + result);
+
+        const isItDoneYet = new Promise();
+
+
+            const checkIfItsDone = () => {
+            isItDoneYet
+                .then(ok => {
+                console.log(ok)
+                })
+                .catch(err => {
+                console.error(err)
+                })
+            }
         
     </script>
 </head>
