@@ -365,6 +365,17 @@
             })
 
             //New changes here
+            const promiseOne = new Promise((resolve, reject) => {
+            setTimeout(resolve, 500, 'one')
+            })
+            const promiseTwo = new Promise((resolve, reject) => {
+            setTimeout(resolve, 100, 'two')
+            })
+
+            Promise.race([promiseOne, promiseTwo]).then(result => {
+            console.log(result) // 'two'
+            })
+            
     </script>
 </head>
 
